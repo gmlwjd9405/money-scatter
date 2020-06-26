@@ -7,4 +7,17 @@ spring:
     url: jdbc:h2:mem:testdb
     username: sa
     password:
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
 
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
