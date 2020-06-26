@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 @Slf4j
@@ -30,17 +31,29 @@ public class ApiScatterController {
             token = scatterService.saveScatterMoney(headers, dto);
         } catch (RuntimeException e) {
             log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
 
-        return ResponseEntity.ok()
-                .body(token);
+        return ResponseEntity.ok().body(token);
+    }
+
+    @PatchMapping("/money/scatter/{token}")
+    public ResponseEntity<?> receive(@RequestHeader Map<String, Object> headers,
+                                        @PathVariable String token) {
+        BigDecimal money;
+
+        try {
+            money = scatterService.receive(headers, token);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return ResponseEntity.ok().body(money);
     }
 
     @GetMapping("/money/scatter/{token}")
     public ResponseEntity<?> show(@RequestHeader Map<String, Object> headers,
-                                        @PathVariable String token) {
+                                  @PathVariable String token) {
         ScatterMoneyDto responseDto;
 
         try {
@@ -52,7 +65,6 @@ public class ApiScatterController {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         }
-        return ResponseEntity.ok()
-                .body(responseDto);
+        return ResponseEntity.ok().body(responseDto);
     }
 }

@@ -28,4 +28,8 @@ public class PickedUpMoney {
 
     @Column(nullable = false)
     private Long userId;
+
+    public boolean isSameUser(final long userId) {
+        return this.userId.equals(userId);
+    }
 }
