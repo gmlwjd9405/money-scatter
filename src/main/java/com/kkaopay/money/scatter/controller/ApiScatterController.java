@@ -1,6 +1,7 @@
 package com.kkaopay.money.scatter.controller;
 
-import com.kkaopay.money.scatter.dto.ScatterMoneyRequestDto;
+import com.kkaopay.money.scatter.dto.request.ScatterMoneyRequestDto;
+import com.kkaopay.money.scatter.dto.response.ScatterMoneyDto;
 import com.kkaopay.money.scatter.service.ScatterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,8 @@ public class ApiScatterController {
     private final ScatterService scatterService;
 
     @PostMapping("/money/scatter")
-    public ResponseEntity<String> saveScatterMoney(@RequestHeader Map<String, Object> headers,
-                                                   @RequestBody ScatterMoneyRequestDto dto){
+    public ResponseEntity<String> save(@RequestHeader Map<String, Object> headers,
+                                       @RequestBody ScatterMoneyRequestDto dto) {
         String token;
 
         try {
@@ -33,5 +34,21 @@ public class ApiScatterController {
 
         return ResponseEntity.ok()
                 .body(token);
+    }
+
+    @GetMapping("/money/scatter/{token}")
+    public ResponseEntity<?> show(@RequestHeader Map<String, Object> headers,
+                                        @PathVariable String token) {
+        ScatterMoneyDto responseDto;
+
+        try {
+            responseDto = scatterService.show(headers, token);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(e.getMessage());
+        }
+        return ResponseEntity.ok()
+                .body(responseDto);
     }
 }

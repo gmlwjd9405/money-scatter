@@ -6,8 +6,10 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Getter
 @Entity
+@Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
 public class PickedUpMoney {
@@ -27,10 +29,10 @@ public class PickedUpMoney {
     @Column(nullable = false)
     private Long userId;
 
-    @Builder
-    public PickedUpMoney(final ScatterMoney scatterMoney, final BigDecimal money, final Long userId) {
-        this.scatterMoney = scatterMoney;
-        this.money = money;
-        this.userId = userId;
-    }
+//    @Builder
+//    public PickedUpMoney(final ScatterMoney scatterMoney, final BigDecimal money, final Long userId) {
+//        this.scatterMoney = scatterMoney;
+//        this.money = money;
+//        this.userId = userId;
+//    }
 }

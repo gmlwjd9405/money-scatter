@@ -31,6 +31,10 @@ public class UserAndRoom {
         throw new NoRequiredHeaderException();
     }
 
+    public boolean isNotSameOwnerId(final Long ownerId) {
+        return !this.ownerId.equals(ownerId);
+    }
+
     public Long getOwnerId() {
         return ownerId;
     }
