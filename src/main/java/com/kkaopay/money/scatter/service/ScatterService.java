@@ -4,6 +4,7 @@ import com.kkaopay.money.scatter.domain.PickedUpMoney;
 import com.kkaopay.money.scatter.domain.ScatterMoney;
 import com.kkaopay.money.scatter.dto.request.ScatterMoneyRequestDto;
 import com.kkaopay.money.scatter.dto.response.ScatterMoneyDto;
+import com.kkaopay.money.scatter.error.ErrorMessage;
 import com.kkaopay.money.scatter.error.exception.NotExistValueException;
 import com.kkaopay.money.scatter.error.exception.UnAuthorizationException;
 import com.kkaopay.money.scatter.pojo.PickedUpMoneys;
@@ -60,17 +61,17 @@ public class ScatterService {
      */
     private void validateIsNotOwnerAndSameRoom(final UserAndRoom userAndRoom, final ScatterMoney scatterMoney) {
         if (userAndRoom.isSameOwnerId(scatterMoney.getOwnerId())) {
-            throw new RuntimeException("뿌린 사람은 받을 수 없습니다.");
+            throw new RuntimeException(ErrorMessage.CANNOT_RECEIVE_BECAUSE_OWNER);
         }
         if (userAndRoom.isNotSameRoomId(scatterMoney.getRoomId())) {
-            throw new RuntimeException("뿌리기가 호출된 대화방과 동일한 대화방에 속한 사용자만이 받을 수 있습니다.");
+            throw new RuntimeException(ErrorMessage.REQUIRED_SAME_ROOM);
         }
     }
 
     /** * 할당된 분배건의 수와 지정한 인원의 수가 같으면 모두 할당된 것으로, 더이상 할당할 수 없다. */
     private void validateExistPickedUpMoney(final int personnel, final int pickedUpMoneyCount) {
         if (personnel == pickedUpMoneyCount) {
-            throw new RuntimeException("모든 분배건 할당되어 돈을 받을 수 없습니다.");
+            throw new RuntimeException(ErrorMessage.CANNOT_RECEIVE_BECAUSE_ALL_ALLOCATED);
         }
     }
 
@@ -80,7 +81,7 @@ public class ScatterService {
                 .anyMatch(pickedUpMoney -> pickedUpMoney.isSameUser(ownerId));
 
         if (isExistUser) {
-            throw new RuntimeException("뿌리기 당한 사용자는 한번만 받을 수 있습니다.");
+            throw new RuntimeException(ErrorMessage.USER_IS_ALREADY_ALLOCATED);
         }
     }
 
