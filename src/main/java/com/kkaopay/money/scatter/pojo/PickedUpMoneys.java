@@ -24,7 +24,7 @@ public class PickedUpMoneys {
         return new PickedUpMoneys(pickedUpMoneys);
     }
 
-    private static void validate(List<PickedUpMoney> pickedUpMoneys) {
+    private static void validate(final List<PickedUpMoney> pickedUpMoneys) {
         if (ObjectUtils.isEmpty(pickedUpMoneys)) {
             throw new IllegalArgumentException(); // TODO check
         }
