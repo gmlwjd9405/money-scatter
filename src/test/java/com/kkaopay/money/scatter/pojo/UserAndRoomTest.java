@@ -14,16 +14,16 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class UserAndRoomInfoTest {
+public class UserAndRoomTest {
 
     @DisplayName("생성 성공: 필수 헤더가 모두 있는 경우")
     @Test
     public void create() {
         final Map<String, Object> headers = new HashMap<>();
-        headers.put(UserAndRoomInfo.ROOM_IDENTIFIER_HEADER_NAME, "roomId");
-        headers.put(UserAndRoomInfo.USER_IDENTIFIER_HEADER_NAME, "111");
+        headers.put(UserAndRoom.ROOM_IDENTIFIER_HEADER_NAME, "roomId");
+        headers.put(UserAndRoom.USER_IDENTIFIER_HEADER_NAME, "111");
 
-        assertThatCode(() -> UserAndRoomInfo.of(headers))
+        assertThatCode(() -> UserAndRoom.of(headers))
                 .doesNotThrowAnyException();
     }
 
@@ -32,15 +32,15 @@ public class UserAndRoomInfoTest {
     @MethodSource
     public void createFailure(final Map<String, Object> headers) {
         assertThatExceptionOfType(NoRequiredHeaderException.class)
-                .isThrownBy(() -> UserAndRoomInfo.of(headers));
+                .isThrownBy(() -> UserAndRoom.of(headers));
     }
 
     private static Stream<Arguments> createFailure() {
         Map<String, String> ownerIdHeaderIsNull = new HashMap<>();
-        ownerIdHeaderIsNull.put(UserAndRoomInfo.ROOM_IDENTIFIER_HEADER_NAME, "roomId");
+        ownerIdHeaderIsNull.put(UserAndRoom.ROOM_IDENTIFIER_HEADER_NAME, "roomId");
 
         Map<String, String> roomIdHeaderIsNull = new HashMap<>();
-        roomIdHeaderIsNull.put(UserAndRoomInfo.USER_IDENTIFIER_HEADER_NAME, "111");
+        roomIdHeaderIsNull.put(UserAndRoom.USER_IDENTIFIER_HEADER_NAME, "111");
 
         return Stream.of(
                 Arguments.of(ownerIdHeaderIsNull),
