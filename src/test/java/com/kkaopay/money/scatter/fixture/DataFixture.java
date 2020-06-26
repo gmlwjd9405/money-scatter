@@ -4,6 +4,7 @@ import com.kkaopay.money.scatter.domain.PickedUpMoney;
 import com.kkaopay.money.scatter.domain.ScatterMoney;
 import com.kkaopay.money.scatter.dto.response.MoneyAndUserDto;
 import com.kkaopay.money.scatter.dto.response.ScatterMoneyDto;
+import com.kkaopay.money.scatter.pojo.PickedUpMoneys;
 import com.kkaopay.money.scatter.pojo.UserAndRoom;
 
 import java.math.BigDecimal;
@@ -42,6 +43,18 @@ public class DataFixture {
                 .build();
     }
 
+    public static ScatterMoney getScatterMoney2() {
+        return ScatterMoney.builder()
+                .token("ABC")
+                .ownerId((long) 111)
+                .roomId("roomId")
+                .money(BigDecimal.valueOf(15000))
+                .personnel(9)
+                .createdDate(LocalDateTime.now())
+                .isExpired(false)
+                .build();
+    }
+
     public static MoneyAndUserDto getMoneyAndUserDto1() {
         return MoneyAndUserDto.of(BigDecimal.valueOf(3000), (long) 222);
     }
@@ -74,7 +87,11 @@ public class DataFixture {
         return info;
     }
 
+    public static PickedUpMoneys getPickedUpMoneys() {
+        return PickedUpMoneys.of(getPickedUpMoneyInfo());
+    }
+
     public static ScatterMoneyDto getScatterMoneyDto() {
-        return ScatterMoneyDto.valueOf(getScatterMoney(), getPickedUpMoneyInfo());
+        return ScatterMoneyDto.valueOf(getScatterMoney(), getPickedUpMoneys());
     }
 }
