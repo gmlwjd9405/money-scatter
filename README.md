@@ -119,7 +119,6 @@
         - 해당 token 을 redis 의 key로 두고 (expireTime = 10분)으로 설정한다.
         - 뿌리기 건에 대한 받기 API 요청 시 해당 값이 redis에 없으면 만료 응답을 보낸다. 
         - redis client lib은 lettuce 사용 
-        - (redis는 싱글 스레드라 동기화 필요없음)
 
 ### 3. 조회 API
 - **request**: token (header: "X-USER-ID", "X-ROOM-ID" 포함) 
