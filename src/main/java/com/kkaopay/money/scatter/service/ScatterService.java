@@ -14,6 +14,7 @@ import com.kkaopay.money.scatter.support.TokenGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +29,7 @@ public class ScatterService {
     private final ScatterRepository scatterRepository;
     private final PickedUpMoneyService pickedUpMoneyService;
 
+    @Transactional
     public String saveScatterMoney(final Map<String, Object> headers, final ScatterMoneyRequestDto dto) {
         UserAndRoom userAndRoom = UserAndRoom.of(headers);
         String token = createToken();
@@ -41,6 +43,7 @@ public class ScatterService {
         return TokenGenerator.generate();
     }
 
+    @Transactional
     public BigDecimal receive(final Map<String, Object> headers, final String token) {
         UserAndRoom userAndRoom = UserAndRoom.of(headers);
         ScatterMoney scatterMoney = this.findByToken(token);
