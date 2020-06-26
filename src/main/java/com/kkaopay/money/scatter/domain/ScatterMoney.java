@@ -1,10 +1,13 @@
 package com.kkaopay.money.scatter.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -36,6 +39,10 @@ public class ScatterMoney {
 
     @Column(nullable = false)
     private boolean isExpired;
+
+    @OneToMany(mappedBy = "scatterMoney", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<PickedUpMoney> PickedUpMoneys = new ArrayList<>();
 
     @Builder
     public ScatterMoney(String token, Long ownerId, String roomId, BigDecimal money, int personnel,
