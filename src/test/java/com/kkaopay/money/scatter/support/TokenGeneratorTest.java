@@ -1,4 +1,4 @@
-package com.kkaopay.money.scatter.token;
+package com.kkaopay.money.scatter.support;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

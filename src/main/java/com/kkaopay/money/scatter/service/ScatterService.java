@@ -10,7 +10,7 @@ import com.kkaopay.money.scatter.error.exception.UnAuthorizationException;
 import com.kkaopay.money.scatter.pojo.PickedUpMoneys;
 import com.kkaopay.money.scatter.pojo.UserAndRoom;
 import com.kkaopay.money.scatter.repository.ScatterRepository;
-import com.kkaopay.money.scatter.token.TokenGenerator;
+import com.kkaopay.money.scatter.support.TokenGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

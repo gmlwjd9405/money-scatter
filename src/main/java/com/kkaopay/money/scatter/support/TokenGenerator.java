@@ -1,4 +1,4 @@
-package com.kkaopay.money.scatter.token;
+package com.kkaopay.money.scatter.support;
 
 import java.util.Collections;
 import java.util.List;
