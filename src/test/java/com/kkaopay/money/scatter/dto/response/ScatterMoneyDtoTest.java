@@ -1,6 +1,8 @@
 package com.kkaopay.money.scatter.dto.response;
 
+import com.kkaopay.money.scatter.domain.ScatterMoney;
 import com.kkaopay.money.scatter.fixture.DataFixture;
+import com.kkaopay.money.scatter.pojo.PickedUpMoneys;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,8 +13,19 @@ import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class ScatterMoneyDtoTest {
+
+    @DisplayName("ScatterMoneyDto 생성")
+    @Test
+    public void create() {
+        ScatterMoney scatterMoney = DataFixture.getScatterMoney();
+        PickedUpMoneys pickedUpMoneys = DataFixture.getPickedUpMoneys();
+
+        assertThatCode(() -> ScatterMoneyDto.valueOf(scatterMoney, pickedUpMoneys))
+                .doesNotThrowAnyException();
+    }
 
     @DisplayName("calculateCompletedMoney 확인")
     @Test
