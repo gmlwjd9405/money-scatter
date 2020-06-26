@@ -21,7 +21,7 @@ public class MoneyAndUserDtoTest {
     @DisplayName("MoneyAndUserDto 로 변환")
     @Test
     public void fromPickedUpMoney() {
-        MoneyAndUserDto dto = MoneyAndUserDto.fromPickedUpMoney(DataFixture.getPickedUpMoney());
+        MoneyAndUserDto dto = MoneyAndUserDto.fromPickedUpMoney(DataFixture.getPickedUpMoney1());
 
         MoneyAndUserDto expected = MoneyAndUserDto.builder()
                 .money(BigDecimal.valueOf(3000))
