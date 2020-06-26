@@ -14,6 +14,7 @@ public class ErrorMessage {
     // 조회 API
     public static final String UN_AUTHORIZATION = "권한이 없습니다.";
     public static final String NOT_EXIST_VALUE = "해당하는 데이터가 없습니다.";
+    public static final String EXPIRED_INQUIRY_PERIOD = "뿌린 건에 대한 조회는 생성 후 7일 동안만 할 수 있습니다.";
 
     private ErrorMessage() {
     }

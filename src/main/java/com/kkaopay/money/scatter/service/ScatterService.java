@@ -15,12 +15,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
 public class ScatterService {
+
+    private static final long EXPIRED_DAYS = 7;
 
     private final ScatterRepository scatterRepository;
     private final PickedUpMoneyService pickedUpMoneyService;
@@ -90,6 +93,7 @@ public class ScatterService {
         ScatterMoney scatterMoney = this.findByToken(token);
 
         validateOwner(userAndRoom, scatterMoney.getOwnerId());
+        validatePeriod(scatterMoney.getCreatedDate());
 
         PickedUpMoneys pickedUpMoneyInfo = pickedUpMoneyService.findAllByScatterMoneyId(scatterMoney.getId());
 
@@ -106,6 +110,13 @@ public class ScatterService {
     private void validateOwner(final UserAndRoom userAndRoom, final Long ownerId) {
         if (!userAndRoom.isSameOwnerId(ownerId)) {
             throw new UnAuthorizationException();
+        }
+    }
+
+    /** * 뿌린 건에 대한 조회는 7일 동안 할 수 있습니다. */
+    private void validatePeriod(final LocalDateTime createdDate) {
+        if (LocalDateTime.now().minusDays(EXPIRED_DAYS).isAfter(createdDate)) {
+            throw new RuntimeException(ErrorMessage.EXPIRED_INQUIRY_PERIOD);
         }
     }
 }

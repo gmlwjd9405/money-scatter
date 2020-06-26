@@ -2,7 +2,6 @@ package com.kkaopay.money.scatter.controller;
 
 import com.kkaopay.money.scatter.dto.request.ScatterMoneyRequestDto;
 import com.kkaopay.money.scatter.dto.response.ScatterMoneyDto;
-import com.kkaopay.money.scatter.error.exception.NotExistValueException;
 import com.kkaopay.money.scatter.error.exception.UnAuthorizationException;
 import com.kkaopay.money.scatter.service.ScatterService;
 import lombok.RequiredArgsConstructor;
@@ -58,12 +57,12 @@ public class ApiScatterController {
 
         try {
             responseDto = scatterService.show(headers, token);
-        } catch (NotExistValueException e) {
-            log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (UnAuthorizationException e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (RuntimeException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
         return ResponseEntity.ok().body(responseDto);
     }
