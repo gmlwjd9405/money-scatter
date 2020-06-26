@@ -28,11 +28,4 @@ public class PickedUpMoney {
 
     @Column(nullable = false)
     private Long userId;
-
-//    @Builder
-//    public PickedUpMoney(final ScatterMoney scatterMoney, final BigDecimal money, final Long userId) {
-//        this.scatterMoney = scatterMoney;
-//        this.money = money;
-//        this.userId = userId;
-//    }
 }

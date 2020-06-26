@@ -46,16 +46,4 @@ public class ScatterMoney {
     @OneToMany(mappedBy = "scatterMoney", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<PickedUpMoney> pickedUpMoneys = new ArrayList<>();
-
-//    @Builder
-//    public ScatterMoney(String token, Long ownerId, String roomId, BigDecimal money, int personnel,
-//                        LocalDateTime createdDate, boolean isExpired) {
-//        this.token = token;
-//        this.ownerId = ownerId;
-//        this.roomId = roomId;
-//        this.money = money;
-//        this.personnel = personnel;
-//        this.createdDate = createdDate;
-//        this.isExpired = isExpired;
-//    }
 }
