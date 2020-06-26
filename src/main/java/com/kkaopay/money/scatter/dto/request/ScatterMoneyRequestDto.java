@@ -1,7 +1,7 @@
-package com.kkaopay.money.scatter.dto;
+package com.kkaopay.money.scatter.dto.request;
 
 import com.kkaopay.money.scatter.domain.ScatterMoney;
-import com.kkaopay.money.scatter.pojo.UserAndRoomInfo;
+import com.kkaopay.money.scatter.pojo.UserAndRoom;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,11 +19,11 @@ public class ScatterMoneyRequestDto {
     private BigDecimal money;
     private int personnel;
 
-    public ScatterMoney toEntity(final UserAndRoomInfo userAndRoomInfo, final String token) {
+    public ScatterMoney toEntity(final UserAndRoom userAndRoom, final String token) {
         return ScatterMoney.builder()
                 .token(token)
-                .ownerId(userAndRoomInfo.getOwnerId())
-                .roomId(userAndRoomInfo.getRoomId())
+                .ownerId(userAndRoom.getOwnerId())
+                .roomId(userAndRoom.getRoomId())
                 .money(money)
                 .personnel(personnel)
                 .createdDate(LocalDateTime.now())
