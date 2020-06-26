@@ -3,6 +3,8 @@ package com.kkaopay.money.scatter.pojo;
 import com.kkaopay.money.scatter.error.exception.NoRequiredHeaderException;
 import lombok.Getter;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
@@ -16,29 +18,31 @@ public class UserAndRoom {
     private final String roomId;
 
     private UserAndRoom(final Long ownerId, final String roomId) {
+        validate(ownerId, roomId);
+
         this.ownerId = ownerId;
         this.roomId = roomId;
     }
 
     public static UserAndRoom of(final Map<String, Object> headers) {
-        validate(headers);
-        Long ownerId = Long.parseLong(getValueOrException(headers, USER_IDENTIFIER_HEADER_NAME).toString());
-        String roomId = (String) getValueOrException(headers, ROOM_IDENTIFIER_HEADER_NAME);
+        validateHeader(headers);
+
+        Long ownerId = Long.parseLong(headers.get(USER_IDENTIFIER_HEADER_NAME).toString());
+        String roomId = (String) headers.get(ROOM_IDENTIFIER_HEADER_NAME);
 
         return new UserAndRoom(ownerId, roomId);
     }
 
-    private static void validate(final Map<String, Object> headers) {
-        if (CollectionUtils.isEmpty(headers)) {
-            throw new IllegalArgumentException(); // TODO check
+    private void validate(final Long ownerId, final String roomId) {
+        if (ObjectUtils.isEmpty(ownerId) || StringUtils.isEmpty(roomId)) {
+            throw new NoRequiredHeaderException();
         }
     }
 
-    private static Object getValueOrException(final Map<String, Object> headers, final String headerName) {
-        if (headers.containsKey(headerName)) {
-            return headers.get(headerName);
+    private static void validateHeader(final Map<String, Object> headers) {
+        if (CollectionUtils.isEmpty(headers)) {
+            throw new NoRequiredHeaderException();
         }
-        throw new NoRequiredHeaderException();
     }
 
     public boolean isSameOwnerId(final Long ownerId) {

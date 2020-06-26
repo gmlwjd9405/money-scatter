@@ -28,11 +28,11 @@ public class UserAndRoomTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("생성 실패: 필수 헤더가 Null 또는 Empty")
+    @DisplayName("생성 실패: 필수 헤더가 Empty")
     @ParameterizedTest
     @NullAndEmptySource
     public void createFailureByNullOrEmpty(final Map<String, Object> headers) {
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(NoRequiredHeaderException.class)
                 .isThrownBy(() -> UserAndRoom.of(headers));
     }
 
@@ -40,7 +40,7 @@ public class UserAndRoomTest {
     @ParameterizedTest
     @MethodSource
     public void createFailure(final Map<String, Object> headers) {
-        assertThatExceptionOfType(NoRequiredHeaderException.class)
+        assertThatExceptionOfType(RuntimeException.class)
                 .isThrownBy(() -> UserAndRoom.of(headers));
     }
 
