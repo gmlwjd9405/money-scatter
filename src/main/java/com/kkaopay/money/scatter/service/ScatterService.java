@@ -36,8 +36,8 @@ public class ScatterService {
     private ValueOperations<String, Object> valueOperations;
 
     @Transactional
-    public String saveScatterMoney(final Map<String, Object> headers, final ScatterMoneyRequestDto dto) {
-        UserAndRoom userAndRoom = UserAndRoom.of(headers);
+    public String scatter(final Long ownerId, final String roomId, final ScatterMoneyRequestDto dto) {
+        UserAndRoom userAndRoom = UserAndRoom.of(ownerId, roomId);
         String token = createToken();
 
         redisService.set(token, userAndRoom);
@@ -52,8 +52,8 @@ public class ScatterService {
     }
 
     @Transactional
-    public BigDecimal receive(final Map<String, Object> headers, final String token) {
-        UserAndRoom userAndRoom = UserAndRoom.of(headers);
+    public BigDecimal receive(final Long ownerId, final String roomId, final String token) {
+        UserAndRoom userAndRoom = UserAndRoom.of(ownerId, roomId);
         ScatterMoney scatterMoney = this.findByToken(token);
 
         redisService.validateExpiredKey(token);
@@ -101,8 +101,8 @@ public class ScatterService {
         }
     }
 
-    public ScatterMoneyDto show(final Map<String, Object> headers, final String token) {
-        UserAndRoom userAndRoom = UserAndRoom.of(headers);
+    public ScatterMoneyDto show(final Long ownerId, final String roomId, final String token) {
+        UserAndRoom userAndRoom = UserAndRoom.of(ownerId, roomId);
         ScatterMoney scatterMoney = this.findByToken(token);
 
         validateOwner(userAndRoom, scatterMoney.getOwnerId());

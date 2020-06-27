@@ -10,25 +10,15 @@ import com.kkaopay.money.scatter.pojo.UserAndRoom;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DataFixture {
 
     public DataFixture() {
     }
 
-    public static Map<String, Object> getHeaders() {
-        final Map<String, Object> headers = new HashMap<>();
-        headers.put(UserAndRoom.ROOM_IDENTIFIER_HEADER_NAME, "roomId");
-        headers.put(UserAndRoom.USER_IDENTIFIER_HEADER_NAME, "111");
-
-        return headers;
-    }
-
     public static UserAndRoom getUserAndRoom() {
-        return UserAndRoom.of(getHeaders());
+        return UserAndRoom.of((long) 111, "roomId");
     }
 
     public static ScatterMoney getScatterMoney() {

@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,15 +18,20 @@ import java.util.Map;
 @RestController
 public class ApiScatterController {
 
+    public static final String USER_IDENTIFIER_HEADER_NAME = "X-USER-ID";
+    public static final String ROOM_IDENTIFIER_HEADER_NAME = "X-ROOM-ID";
+    public static final String TOKEN_HEADER_NAME = "X-TOKEN-VALUE";
+
     private final ScatterService scatterService;
 
     @PostMapping("/money/scatter")
-    public ResponseEntity<String> save(@RequestHeader Map<String, Object> headers,
-                                       @RequestBody ScatterMoneyRequestDto dto) {
+    public ResponseEntity<String> scatter(@RequestHeader(USER_IDENTIFIER_HEADER_NAME) final Long userId,
+                                          @RequestHeader(ROOM_IDENTIFIER_HEADER_NAME) final String roomId,
+                                          @RequestBody ScatterMoneyRequestDto dto) {
         String token;
 
         try {
-            token = scatterService.saveScatterMoney(headers, dto);
+            token = scatterService.scatter(userId, roomId, dto);
         } catch (RuntimeException e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -36,13 +40,14 @@ public class ApiScatterController {
         return ResponseEntity.ok().body(token);
     }
 
-    @PatchMapping("/money/scatter/{token}")
-    public ResponseEntity<?> receive(@RequestHeader Map<String, Object> headers,
-                                        @PathVariable String token) {
+    @PatchMapping("/money/scatter")
+    public ResponseEntity<?> receive(@RequestHeader(USER_IDENTIFIER_HEADER_NAME) final Long userId,
+                                     @RequestHeader(ROOM_IDENTIFIER_HEADER_NAME) final String roomId,
+                                     @RequestHeader(TOKEN_HEADER_NAME) String token) {
         BigDecimal money;
 
         try {
-            money = scatterService.receive(headers, token);
+            money = scatterService.receive(userId, roomId, token);
         } catch (RuntimeException e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -50,13 +55,14 @@ public class ApiScatterController {
         return ResponseEntity.ok().body(money);
     }
 
-    @GetMapping("/money/scatter/{token}")
-    public ResponseEntity<?> show(@RequestHeader Map<String, Object> headers,
-                                  @PathVariable String token) {
+    @GetMapping("/money/scatter")
+    public ResponseEntity<?> show(@RequestHeader(USER_IDENTIFIER_HEADER_NAME) final Long userId,
+                                  @RequestHeader(ROOM_IDENTIFIER_HEADER_NAME) final String roomId,
+                                  @RequestHeader(TOKEN_HEADER_NAME) String token) {
         ScatterMoneyDto responseDto;
 
         try {
-            responseDto = scatterService.show(headers, token);
+            responseDto = scatterService.show(userId, roomId, token);
         } catch (UnAuthorizationException e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
