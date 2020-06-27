@@ -3,8 +3,8 @@ package com.kkaopay.money.scatter.pojo;
 import com.kkaopay.money.scatter.domain.PickedUpMoney;
 import com.kkaopay.money.scatter.domain.ScatterMoney;
 import com.kkaopay.money.scatter.dto.response.MoneyAndUserDto;
+import com.kkaopay.money.scatter.error.ErrorMessage;
 import lombok.Getter;
-import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,8 +25,8 @@ public class PickedUpMoneys {
     }
 
     private static void validate(final List<PickedUpMoney> pickedUpMoneys) {
-        if (ObjectUtils.isEmpty(pickedUpMoneys)) {
-            throw new IllegalArgumentException(); // TODO check
+        if (pickedUpMoneys == null) {
+            throw new IllegalArgumentException(ErrorMessage.IS_NULL_VALUE);
         }
     }
 

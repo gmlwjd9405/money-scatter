@@ -12,8 +12,10 @@ import com.kkaopay.money.scatter.pojo.UserAndRoom;
 import com.kkaopay.money.scatter.repository.ScatterRepository;
 import com.kkaopay.money.scatter.support.TokenGenerator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -28,11 +30,17 @@ public class ScatterService {
 
     private final ScatterRepository scatterRepository;
     private final PickedUpMoneyService pickedUpMoneyService;
+    private final RedisService redisService;
+
+    @Resource(name = "redisTemplate")
+    private ValueOperations<String, Object> valueOperations;
 
     @Transactional
     public String saveScatterMoney(final Map<String, Object> headers, final ScatterMoneyRequestDto dto) {
         UserAndRoom userAndRoom = UserAndRoom.of(headers);
         String token = createToken();
+
+        redisService.set(token, userAndRoom);
 
         scatterRepository.save(dto.toEntity(userAndRoom, token));
 
@@ -47,6 +55,8 @@ public class ScatterService {
     public BigDecimal receive(final Map<String, Object> headers, final String token) {
         UserAndRoom userAndRoom = UserAndRoom.of(headers);
         ScatterMoney scatterMoney = this.findByToken(token);
+
+        redisService.validateExpiredKey(token);
 
         validateIsNotOwnerAndSameRoom(userAndRoom, scatterMoney);
 

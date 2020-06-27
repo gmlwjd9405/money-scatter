@@ -6,10 +6,13 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.Serializable;
 import java.util.Map;
 
 @Getter
-public class UserAndRoom {
+public class UserAndRoom implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public static final String USER_IDENTIFIER_HEADER_NAME = "x-user-id";
     public static final String ROOM_IDENTIFIER_HEADER_NAME = "x-room-id";
