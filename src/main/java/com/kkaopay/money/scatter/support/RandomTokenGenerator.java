@@ -1,9 +1,9 @@
 package com.kkaopay.money.scatter.support;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.text.CharacterPredicates;
+import org.apache.commons.text.RandomStringGenerator;
 
 public class RandomTokenGenerator implements TokenGenerationStrategy {
-
 
     private final int length;
 
@@ -17,6 +17,11 @@ public class RandomTokenGenerator implements TokenGenerationStrategy {
 
     @Override
     public String generate() {
-        return RandomStringUtils.random(length, true, true);
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+                .withinRange('0', 'z')
+                .filteredBy(CharacterPredicates.DIGITS, CharacterPredicates.LETTERS)
+                .build();
+
+        return generator.generate(this.length);
     }
 }
