@@ -1,4 +1,11 @@
 spring:
+  profiles:
+    active: local
+
+# local 환경
+---
+spring:
+  profiles: local
   cache:
     type: redis
   redis:
@@ -27,3 +34,8 @@ logging:
         type:
           descriptor:
             sql: trace
+
+# 운영 환경
+---
+spring:
+  profiles: prod
