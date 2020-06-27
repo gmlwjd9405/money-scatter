@@ -1,14 +1,14 @@
 package com.kkaopay.money.scatter.service;
 
-import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
-import com.kkaopay.money.scatter.domain.model.ScatterMoney;
 import com.kkaopay.money.scatter.controller.dto.request.ScatterMoneyRequestDto;
 import com.kkaopay.money.scatter.controller.dto.response.ScatterMoneyDto;
+import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
+import com.kkaopay.money.scatter.domain.model.ScatterMoney;
+import com.kkaopay.money.scatter.domain.repository.ScatterRepository;
 import com.kkaopay.money.scatter.error.exception.NotExistValueException;
 import com.kkaopay.money.scatter.service.pojo.PickedUpMoneys;
 import com.kkaopay.money.scatter.service.pojo.UserAndRoom;
-import com.kkaopay.money.scatter.domain.repository.ScatterRepository;
-import com.kkaopay.money.scatter.support.TokenGenerator;
+import com.kkaopay.money.scatter.support.RandomTokenGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +18,8 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 @Service
 public class ScatterService {
+
+    public static final int TOKEN_LENGTH = 3;
 
     private final PickedUpMoneyService pickedUpMoneyService;
     private final RedisService redisService;
@@ -41,7 +43,7 @@ public class ScatterService {
     }
 
     private String createToken() {
-        return TokenGenerator.generate();
+        return RandomTokenGenerator.of(TOKEN_LENGTH).generate();
     }
 
     public BigDecimal receive(final Long ownerId, final String roomId, final String token) {

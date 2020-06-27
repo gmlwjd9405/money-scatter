@@ -4,22 +4,32 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TokenGenerator {
+public class RandomTokenGenerator implements TokenGenerationStrategy {
 
-    public static final int TOKEN_LENGTH = 3;
     private static final String EMPTY_STRING = "";
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 
-    public static String generate() {
+    private final int length;
+
+    private RandomTokenGenerator(final int length) {
+        this.length = length;
+    }
+
+    public static RandomTokenGenerator of(final int length) {
+        return new RandomTokenGenerator(length);
+    }
+
+    @Override
+    public String generate() {
         List<String> characters = generateCharacters();
         Collections.shuffle(characters);
 
         return characters.stream()
-                .limit(TOKEN_LENGTH)
+                .limit(length)
                 .collect(Collectors.joining(EMPTY_STRING));
     }
 
-    private static List<String> generateCharacters() {
+    private List<String> generateCharacters() {
         return CHARACTERS.chars()
                 .mapToObj(i -> (char)i)
                 .map(Object::toString)
