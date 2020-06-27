@@ -1,6 +1,6 @@
 package com.kkaopay.money.scatter.controller.dto.request;
 
-import com.kkaopay.money.scatter.domain.model.ScatterMoney;
+import com.kkaopay.money.scatter.domain.entity.ScatterMoney;
 import com.kkaopay.money.scatter.service.pojo.UserAndRoom;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

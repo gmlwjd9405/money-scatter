@@ -1,6 +1,6 @@
 package com.kkaopay.money.scatter.controller.dto.response;
 
-import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
+import com.kkaopay.money.scatter.domain.entity.PickedUpMoney;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -1,6 +1,5 @@
-package com.kkaopay.money.scatter.domain.model;
+package com.kkaopay.money.scatter.domain.entity;
 
-import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
 import com.kkaopay.money.scatter.fixture.DataFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

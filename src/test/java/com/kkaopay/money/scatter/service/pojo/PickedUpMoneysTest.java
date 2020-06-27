@@ -1,7 +1,7 @@
 package com.kkaopay.money.scatter.service.pojo;
 
-import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
-import com.kkaopay.money.scatter.domain.model.ScatterMoney;
+import com.kkaopay.money.scatter.domain.entity.PickedUpMoney;
+import com.kkaopay.money.scatter.domain.entity.ScatterMoney;
 import com.kkaopay.money.scatter.fixture.DataFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

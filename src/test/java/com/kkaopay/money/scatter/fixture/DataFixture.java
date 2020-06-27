@@ -1,7 +1,7 @@
 package com.kkaopay.money.scatter.fixture;
 
-import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
-import com.kkaopay.money.scatter.domain.model.ScatterMoney;
+import com.kkaopay.money.scatter.domain.entity.PickedUpMoney;
+import com.kkaopay.money.scatter.domain.entity.ScatterMoney;
 import com.kkaopay.money.scatter.controller.dto.response.MoneyAndUserDto;
 import com.kkaopay.money.scatter.controller.dto.response.ScatterMoneyDto;
 import com.kkaopay.money.scatter.service.pojo.PickedUpMoneys;

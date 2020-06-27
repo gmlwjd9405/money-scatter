@@ -1,6 +1,6 @@
 package com.kkaopay.money.scatter.service;
 
-import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
+import com.kkaopay.money.scatter.domain.entity.PickedUpMoney;
 import com.kkaopay.money.scatter.service.pojo.PickedUpMoneys;
 import com.kkaopay.money.scatter.domain.repository.PickedUpMoneyRepository;
 import lombok.RequiredArgsConstructor;

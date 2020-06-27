@@ -2,8 +2,8 @@ package com.kkaopay.money.scatter.service;
 
 import com.kkaopay.money.scatter.controller.dto.request.ScatterMoneyRequestDto;
 import com.kkaopay.money.scatter.controller.dto.response.ScatterMoneyDto;
-import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
-import com.kkaopay.money.scatter.domain.model.ScatterMoney;
+import com.kkaopay.money.scatter.domain.entity.PickedUpMoney;
+import com.kkaopay.money.scatter.domain.entity.ScatterMoney;
 import com.kkaopay.money.scatter.domain.repository.ScatterRepository;
 import com.kkaopay.money.scatter.error.exception.NotExistValueException;
 import com.kkaopay.money.scatter.service.pojo.PickedUpMoneys;
