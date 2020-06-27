@@ -1,11 +1,11 @@
 package com.kkaopay.money.scatter.service;
 
-import com.kkaopay.money.scatter.domain.PickedUpMoney;
-import com.kkaopay.money.scatter.domain.ScatterMoney;
+import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
+import com.kkaopay.money.scatter.domain.model.ScatterMoney;
 import com.kkaopay.money.scatter.error.ErrorCode;
 import com.kkaopay.money.scatter.error.exception.NotExistValueException;
 import com.kkaopay.money.scatter.error.exception.UnAuthorizationException;
-import com.kkaopay.money.scatter.pojo.UserAndRoom;
+import com.kkaopay.money.scatter.service.pojo.UserAndRoom;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

@@ -1,11 +1,11 @@
 package com.kkaopay.money.scatter.fixture;
 
-import com.kkaopay.money.scatter.domain.PickedUpMoney;
-import com.kkaopay.money.scatter.domain.ScatterMoney;
-import com.kkaopay.money.scatter.dto.response.MoneyAndUserDto;
-import com.kkaopay.money.scatter.dto.response.ScatterMoneyDto;
-import com.kkaopay.money.scatter.pojo.PickedUpMoneys;
-import com.kkaopay.money.scatter.pojo.UserAndRoom;
+import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
+import com.kkaopay.money.scatter.domain.model.ScatterMoney;
+import com.kkaopay.money.scatter.controller.dto.response.MoneyAndUserDto;
+import com.kkaopay.money.scatter.controller.dto.response.ScatterMoneyDto;
+import com.kkaopay.money.scatter.service.pojo.PickedUpMoneys;
+import com.kkaopay.money.scatter.service.pojo.UserAndRoom;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

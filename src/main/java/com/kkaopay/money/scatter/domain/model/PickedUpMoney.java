@@ -1,4 +1,4 @@
-package com.kkaopay.money.scatter.domain;
+package com.kkaopay.money.scatter.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;

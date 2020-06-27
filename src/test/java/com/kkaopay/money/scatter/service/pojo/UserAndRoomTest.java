@@ -1,4 +1,4 @@
-package com.kkaopay.money.scatter.pojo;
+package com.kkaopay.money.scatter.service.pojo;
 
 import com.kkaopay.money.scatter.fixture.DataFixture;
 import org.junit.jupiter.api.DisplayName;

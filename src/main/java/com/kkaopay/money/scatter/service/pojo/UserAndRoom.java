@@ -1,4 +1,4 @@
-package com.kkaopay.money.scatter.pojo;
+package com.kkaopay.money.scatter.service.pojo;
 
 import com.kkaopay.money.scatter.error.exception.InvalidValueException;
 import lombok.Getter;

@@ -1,8 +1,8 @@
-package com.kkaopay.money.scatter.pojo;
+package com.kkaopay.money.scatter.service.pojo;
 
-import com.kkaopay.money.scatter.domain.PickedUpMoney;
-import com.kkaopay.money.scatter.domain.ScatterMoney;
-import com.kkaopay.money.scatter.dto.response.MoneyAndUserDto;
+import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
+import com.kkaopay.money.scatter.domain.model.ScatterMoney;
+import com.kkaopay.money.scatter.controller.dto.response.MoneyAndUserDto;
 import com.kkaopay.money.scatter.error.ErrorMessage;
 import lombok.Getter;
 

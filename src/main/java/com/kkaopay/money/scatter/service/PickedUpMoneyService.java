@@ -1,8 +1,8 @@
 package com.kkaopay.money.scatter.service;
 
-import com.kkaopay.money.scatter.domain.PickedUpMoney;
-import com.kkaopay.money.scatter.pojo.PickedUpMoneys;
-import com.kkaopay.money.scatter.repository.PickedUpMoneyRepository;
+import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
+import com.kkaopay.money.scatter.service.pojo.PickedUpMoneys;
+import com.kkaopay.money.scatter.domain.repository.PickedUpMoneyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

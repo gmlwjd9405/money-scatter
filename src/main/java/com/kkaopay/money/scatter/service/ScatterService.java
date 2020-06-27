@@ -1,13 +1,13 @@
 package com.kkaopay.money.scatter.service;
 
-import com.kkaopay.money.scatter.domain.PickedUpMoney;
-import com.kkaopay.money.scatter.domain.ScatterMoney;
-import com.kkaopay.money.scatter.dto.request.ScatterMoneyRequestDto;
-import com.kkaopay.money.scatter.dto.response.ScatterMoneyDto;
+import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
+import com.kkaopay.money.scatter.domain.model.ScatterMoney;
+import com.kkaopay.money.scatter.controller.dto.request.ScatterMoneyRequestDto;
+import com.kkaopay.money.scatter.controller.dto.response.ScatterMoneyDto;
 import com.kkaopay.money.scatter.error.exception.NotExistValueException;
-import com.kkaopay.money.scatter.pojo.PickedUpMoneys;
-import com.kkaopay.money.scatter.pojo.UserAndRoom;
-import com.kkaopay.money.scatter.repository.ScatterRepository;
+import com.kkaopay.money.scatter.service.pojo.PickedUpMoneys;
+import com.kkaopay.money.scatter.service.pojo.UserAndRoom;
+import com.kkaopay.money.scatter.domain.repository.ScatterRepository;
 import com.kkaopay.money.scatter.support.TokenGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

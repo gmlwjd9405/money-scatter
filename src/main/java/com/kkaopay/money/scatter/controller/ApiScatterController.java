@@ -1,7 +1,7 @@
 package com.kkaopay.money.scatter.controller;
 
-import com.kkaopay.money.scatter.dto.request.ScatterMoneyRequestDto;
-import com.kkaopay.money.scatter.dto.response.ScatterMoneyDto;
+import com.kkaopay.money.scatter.controller.dto.request.ScatterMoneyRequestDto;
+import com.kkaopay.money.scatter.controller.dto.response.ScatterMoneyDto;
 import com.kkaopay.money.scatter.service.ScatterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

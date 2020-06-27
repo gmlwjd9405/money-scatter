@@ -1,7 +1,7 @@
-package com.kkaopay.money.scatter.dto.request;
+package com.kkaopay.money.scatter.controller.dto.request;
 
 import com.kkaopay.money.scatter.fixture.DataFixture;
-import com.kkaopay.money.scatter.pojo.UserAndRoom;
+import com.kkaopay.money.scatter.service.pojo.UserAndRoom;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
 package com.kkaopay.money.scatter;
 
-import com.kkaopay.money.scatter.domain.ScatterMoney;
-import com.kkaopay.money.scatter.repository.ScatterRepository;
+import com.kkaopay.money.scatter.domain.model.ScatterMoney;
+import com.kkaopay.money.scatter.domain.repository.ScatterRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

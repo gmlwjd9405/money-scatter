@@ -1,4 +1,4 @@
-package com.kkaopay.money.scatter.dto.response;
+package com.kkaopay.money.scatter.controller.dto.response;
 
 import com.kkaopay.money.scatter.fixture.DataFixture;
 import org.junit.jupiter.api.DisplayName;

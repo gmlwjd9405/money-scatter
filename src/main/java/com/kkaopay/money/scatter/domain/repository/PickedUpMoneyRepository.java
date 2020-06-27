@@ -1,6 +1,6 @@
-package com.kkaopay.money.scatter.repository;
+package com.kkaopay.money.scatter.domain.repository;
 
-import com.kkaopay.money.scatter.domain.PickedUpMoney;
+import com.kkaopay.money.scatter.domain.model.PickedUpMoney;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
