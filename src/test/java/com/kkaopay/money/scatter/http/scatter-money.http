@@ -1,0 +1,33 @@
+############################### 뿌리기 API
+### 필수 헤더가 없습니다.
+POST http://localhost:8080/api/v1/money/scatter
+Content-Type: application/json
+X-ROOM-ID: room
+
+{
+  "money": 10000,
+  "personnel": 3
+}
+
+### 성공
+POST http://localhost:8080/api/v1/money/scatter
+Content-Type: application/json
+X-USER-ID: 333
+X-ROOM-ID: room
+
+{
+  "money": 12000,
+  "personnel": 3
+}
+
+### 성공
+POST http://localhost:8080/api/v1/money/scatter
+Content-Type: application/json
+X-USER-ID: 222
+X-ROOM-ID: room
+
+{
+  "money": 9000,
+  "personnel": 3
+}
+

@@ -1,0 +1,53 @@
+############################### 받기 API
+### token 이 없는 경우
+PATCH http://localhost:8080/api/v1/money/scatter
+Content-Type: application/json
+X-USER-ID: 222
+X-ROOM-ID: room
+
+### 필수 헤더가 없습니다.
+PATCH http://localhost:8080/api/v1/money/scatter
+Content-Type: application/json
+X-ROOM-ID: room
+
+### 자신이 뿌리기한 건은 자신이 받을 수 없습니다.
+PATCH http://localhost:8080/api/v1/money/scatter
+Content-Type: application/json
+X-USER-ID: 111
+X-ROOM-ID: room
+X-TOKEN-VALUE: zXc
+
+### 뿌리기가 호출된 대화방과 동일한 대화방에 속한 사용자만이 받을 수 있습니다.
+PATCH http://localhost:8080/api/v1/money/scatter
+Content-Type: application/json
+X-USER-ID: 555
+X-ROOM-ID: room1
+X-TOKEN-VALUE: zXc
+
+### 뿌리기 당한 사용자는 한번만 받을 수 있습니다.
+PATCH http://localhost:8080/api/v1/money/scatter
+Content-Type: application/json
+X-USER-ID: 111
+X-ROOM-ID: room
+X-TOKEN-VALUE: Prx
+
+### 모든 분배건 할당되었으면 할당되었다고 응답한다.
+PATCH http://localhost:8080/api/v1/money/scatter
+Content-Type: application/json
+X-USER-ID: 555
+X-ROOM-ID: room
+X-TOKEN-VALUE: Sob
+
+### 성공
+PATCH http://localhost:8080/api/v1/money/scatter
+Content-Type: application/json
+X-USER-ID: 555
+X-ROOM-ID: room
+X-TOKEN-VALUE: Prx
+
+### 성공
+PATCH http://localhost:8080/api/v1/money/scatter
+Content-Type: application/json
+X-USER-ID: 555
+X-ROOM-ID: room
+X-TOKEN-VALUE: BpC

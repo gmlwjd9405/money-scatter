@@ -1,0 +1,33 @@
+############################### 조회 API
+### token 이 없는 경우
+GET http://localhost:8080/api/v1/money/scatter
+X-USER-ID: 222
+X-ROOM-ID: room
+
+### 필수 헤더가 없습니다.
+GET http://localhost:8080/api/v1/money/scatter
+X-USER-ID: 222
+
+### 조회 권한이 없습니다.
+GET http://localhost:8080/api/v1/money/scatter
+X-USER-ID: 222
+X-ROOM-ID: room
+X-TOKEN-VALUE: Sob
+
+### 해당 데이터가 없습니다.
+GET http://localhost:8080/api/v1/money/scatter
+X-USER-ID: 222
+X-ROOM-ID: room
+X-TOKEN-VALUE: aaa
+
+### 성공
+GET http://localhost:8080/api/v1/money/scatter
+X-USER-ID: 111
+X-ROOM-ID: room
+X-TOKEN-VALUE: Sob
+
+### 뿌린 건에 대한 조회는 생성 후 7일 동안만 할 수 있습니다.
+GET http://localhost:8080/api/v1/money/scatter
+X-USER-ID: 222
+X-ROOM-ID: roomId2
+X-TOKEN-VALUE: abc
