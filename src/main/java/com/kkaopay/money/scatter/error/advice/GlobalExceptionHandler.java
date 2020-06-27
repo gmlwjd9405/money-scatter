@@ -3,13 +3,13 @@ package com.kkaopay.money.scatter.error.advice;
 import com.kkaopay.money.scatter.error.ErrorCode;
 import com.kkaopay.money.scatter.error.ErrorResponse;
 import com.kkaopay.money.scatter.error.exception.InvalidValueException;
+import com.kkaopay.money.scatter.error.exception.NoRequiredHeaderException;
 import com.kkaopay.money.scatter.error.exception.NotExistValueException;
 import com.kkaopay.money.scatter.error.exception.UnAuthorizationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -20,9 +20,9 @@ import java.nio.file.AccessDeniedException;
 public class GlobalExceptionHandler {
 
     /** * 필수 헤더가 없는 경우 발생 */
-    @ExceptionHandler(MissingRequestHeaderException.class)
-    protected ResponseEntity<ErrorResponse> handleMissingRequestHeaderException(MissingRequestHeaderException e) {
-        log.error("handleMissingRequestHeaderException", e);
+    @ExceptionHandler(NoRequiredHeaderException.class)
+    protected ResponseEntity<ErrorResponse> handleNoRequiredHeaderException(NoRequiredHeaderException e) {
+        log.error("handleNoRequiredHeaderException", e);
         final ErrorResponse response = ErrorResponse.of(ErrorCode.NO_REQUIRED_HEADER_INFO);
         return new ResponseEntity<>(response, HttpStatus.valueOf(ErrorCode.NO_REQUIRED_HEADER_INFO.getCode()));
     }
