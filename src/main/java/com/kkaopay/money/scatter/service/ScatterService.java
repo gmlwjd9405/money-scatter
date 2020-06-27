@@ -4,9 +4,7 @@ import com.kkaopay.money.scatter.domain.PickedUpMoney;
 import com.kkaopay.money.scatter.domain.ScatterMoney;
 import com.kkaopay.money.scatter.dto.request.ScatterMoneyRequestDto;
 import com.kkaopay.money.scatter.dto.response.ScatterMoneyDto;
-import com.kkaopay.money.scatter.error.ErrorCode;
 import com.kkaopay.money.scatter.error.exception.NotExistValueException;
-import com.kkaopay.money.scatter.error.exception.UnAuthorizationException;
 import com.kkaopay.money.scatter.pojo.PickedUpMoneys;
 import com.kkaopay.money.scatter.pojo.UserAndRoom;
 import com.kkaopay.money.scatter.repository.ScatterRepository;
@@ -16,18 +14,16 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class ScatterService {
 
-    private static final long EXPIRED_DAYS = 7;
 
-    private final ScatterRepository scatterRepository;
     private final PickedUpMoneyService pickedUpMoneyService;
     private final RedisService redisService;
+    private final ValidateService validateService;
+    private final ScatterRepository scatterRepository;
 
     @Transactional
     public String scatter(final Long ownerId, final String roomId, final ScatterMoneyRequestDto dto) {
@@ -52,12 +48,12 @@ public class ScatterService {
 
         redisService.validateExpiredKey(token);
 
-        validateIsNotOwnerAndSameRoom(userAndRoom, scatterMoney);
+        validateService.validateIsNotOwnerAndSameRoom(userAndRoom, scatterMoney);
 
         PickedUpMoneys pickedUpMoneyInfo = pickedUpMoneyService.findAllByScatterMoneyId(scatterMoney.getId());
 
-        validateExistPickedUpMoney(scatterMoney.getPersonnel(), pickedUpMoneyInfo.size());
-        validateDuplicatedReceiver(userAndRoom.getOwnerId(), pickedUpMoneyInfo.getPickedUpMoneys());
+        validateService.validateExistPickedUpMoney(scatterMoney.getPersonnel(), pickedUpMoneyInfo.size());
+        validateService.validateDuplicatedReceiver(userAndRoom.getOwnerId(), pickedUpMoneyInfo.getPickedUpMoneys());
 
         PickedUpMoney newPickedUpMoney = pickedUpMoneyInfo.distributeMoney(userAndRoom.getOwnerId(), scatterMoney);
         pickedUpMoneyService.insert(newPickedUpMoney);
@@ -65,42 +61,12 @@ public class ScatterService {
         return newPickedUpMoney.getMoney();
     }
 
-    /**
-     * 뿌린 사람은 받을 수 없습니다.
-     * 뿌리기가 호출된 대화방과 동일한 대화방에 속한 사용자만이 받을 수 있습니다.
-     */
-    private void validateIsNotOwnerAndSameRoom(final UserAndRoom userAndRoom, final ScatterMoney scatterMoney) {
-        if (userAndRoom.isSameOwnerId(scatterMoney.getOwnerId())) {
-            throw new UnAuthorizationException(ErrorCode.CANNOT_RECEIVE_BECAUSE_OWNER);
-        }
-        if (userAndRoom.isNotSameRoomId(scatterMoney.getRoomId())) {
-            throw new UnAuthorizationException(ErrorCode.REQUIRED_SAME_ROOM);
-        }
-    }
-
-    /** * 할당된 분배건의 수와 지정한 인원의 수가 같으면 모두 할당된 것으로, 더이상 할당할 수 없다. */
-    private void validateExistPickedUpMoney(final int personnel, final int pickedUpMoneyCount) {
-        if (personnel == pickedUpMoneyCount) {
-            throw new NotExistValueException(ErrorCode.CANNOT_RECEIVE_BECAUSE_ALL_ALLOCATED);
-        }
-    }
-
-    /** * 분배 건에 요청한 사용자 id가 있으면 받을 수 없다. */
-    private void validateDuplicatedReceiver(long ownerId, List<PickedUpMoney> pickedUpMoneyInfo) {
-        final boolean isExistUser = pickedUpMoneyInfo.stream()
-                .anyMatch(pickedUpMoney -> pickedUpMoney.isSameUser(ownerId));
-
-        if (isExistUser) {
-            throw new UnAuthorizationException(ErrorCode.USER_IS_ALREADY_ALLOCATED);
-        }
-    }
-
     public ScatterMoneyDto show(final Long ownerId, final String roomId, final String token) {
         UserAndRoom userAndRoom = UserAndRoom.of(ownerId, roomId);
         ScatterMoney scatterMoney = this.findByToken(token);
 
-        validateOwner(userAndRoom, scatterMoney.getOwnerId());
-        validatePeriod(scatterMoney.getCreatedDate());
+        validateService.validateOwner(userAndRoom, scatterMoney.getOwnerId());
+        validateService.validatePeriod(scatterMoney.getCreatedDate());
 
         PickedUpMoneys pickedUpMoneyInfo = pickedUpMoneyService.findAllByScatterMoneyId(scatterMoney.getId());
 
@@ -111,19 +77,5 @@ public class ScatterService {
     private ScatterMoney findByToken(final String token) {
         return scatterRepository.findByToken(token)
                 .orElseThrow(NotExistValueException::new);
-    }
-
-    /** * 뿌린 사람 자신만 조회를 할 수 있습니다. */
-    private void validateOwner(final UserAndRoom userAndRoom, final Long ownerId) {
-        if (!userAndRoom.isSameOwnerId(ownerId)) {
-            throw new UnAuthorizationException();
-        }
-    }
-
-    /** * 뿌린 건에 대한 조회는 7일 동안 할 수 있습니다. */
-    private void validatePeriod(final LocalDateTime createdDate) {
-        if (LocalDateTime.now().minusDays(EXPIRED_DAYS).isAfter(createdDate)) {
-            throw new NotExistValueException(ErrorCode.EXPIRED_INQUIRY_PERIOD);
-        }
     }
 }
