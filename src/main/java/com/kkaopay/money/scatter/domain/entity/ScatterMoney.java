@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
+@Table(indexes = { @Index(name = "TOKEN", unique = true, columnList = "token") })
 public class ScatterMoney {
 
     @Id
