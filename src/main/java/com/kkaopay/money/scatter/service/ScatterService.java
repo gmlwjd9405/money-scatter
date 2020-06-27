@@ -19,35 +19,36 @@ import java.math.BigDecimal;
 @Service
 public class ScatterService {
 
-
     private final PickedUpMoneyService pickedUpMoneyService;
     private final RedisService redisService;
     private final ValidateService validateService;
     private final ScatterRepository scatterRepository;
 
-    @Transactional
     public String scatter(final Long ownerId, final String roomId, final ScatterMoneyRequestDto dto) {
         UserAndRoom userAndRoom = UserAndRoom.of(ownerId, roomId);
         String token = createToken();
 
         redisService.set(token, userAndRoom);
 
-        scatterRepository.save(dto.toEntity(userAndRoom, token));
+        save(dto.toEntity(userAndRoom, token));
 
         return token;
+    }
+
+    @Transactional
+    public void save(final ScatterMoney scatterMoney) {
+        scatterRepository.save(scatterMoney);
     }
 
     private String createToken() {
         return TokenGenerator.generate();
     }
 
-    @Transactional
     public BigDecimal receive(final Long ownerId, final String roomId, final String token) {
         UserAndRoom userAndRoom = UserAndRoom.of(ownerId, roomId);
         ScatterMoney scatterMoney = this.findByToken(token);
 
         redisService.validateExpiredKey(token);
-
         validateService.validateIsNotOwnerAndSameRoom(userAndRoom, scatterMoney);
 
         PickedUpMoneys pickedUpMoneyInfo = pickedUpMoneyService.findAllByScatterMoneyId(scatterMoney.getId());
@@ -56,9 +57,14 @@ public class ScatterService {
         validateService.validateDuplicatedReceiver(userAndRoom.getOwnerId(), pickedUpMoneyInfo.getPickedUpMoneys());
 
         PickedUpMoney newPickedUpMoney = pickedUpMoneyInfo.distributeMoney(userAndRoom.getOwnerId(), scatterMoney);
-        pickedUpMoneyService.insert(newPickedUpMoney);
+        savePickedUpMoney(newPickedUpMoney);
 
         return newPickedUpMoney.getMoney();
+    }
+
+    @Transactional
+    public void savePickedUpMoney(final PickedUpMoney pickedUpMoney) {
+        pickedUpMoneyService.insert(pickedUpMoney);
     }
 
     public ScatterMoneyDto show(final Long ownerId, final String roomId, final String token) {
