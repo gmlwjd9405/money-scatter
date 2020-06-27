@@ -37,7 +37,7 @@
 
 --- 
 
-## Project Structure
+## :pushpin: Project Setting & Structure
 #### Requirements
 > - Gradle 5.6.4
 > - Spring boot 2.3.1
@@ -64,7 +64,7 @@
 └── support
 ```
 
-## API & Response
+## :pushpin: API & Response
 #### Rest API 
 | Method | API | Parameter | Header | 기능 | 요약 |
 |--|--|--|--|--|--| 
@@ -87,7 +87,7 @@
 | NOT_EXIST_VALUE | 400 | NotExistValueException | 뿌리기 정보가 존재하지 않음 |
 | EXPIRED_INQUIRY_PERIOD | 400 | NotExistValueException | 뿌리기 정보 조회 기간 만료됨 (7일) |
 
-## DB ERD
+## :pushpin: DB ERD
 ![](images/erd.png)
 
 #### ScatterMoney Table
@@ -106,8 +106,8 @@
 - int money: 분배된 금액 
 - int userId: 발급받은 사용자 id
    
-## 요구 사항 문제 해결 전략
-### 1. 뿌리기 API
+## :pushpin: 요구 사항 문제 해결 전략
+### :heavy_check_mark: 1. 뿌리기 API
 - **request**
     - body: 뿌릴 금액, 뿌릴 인원 
     - header: 뿌린 사용자 "X-USER-ID", 뿌린 방 "X-ROOM-ID"
@@ -130,7 +130,7 @@
 - [x] 해당 token 을 redis 의 key로 저장하고, 만료 시간(expireTime = 10분)을 설정한다.
     - redis client lib은 lettuce 사용 
 
-### 2. 받기 API
+### :heavy_check_mark: 2. 받기 API
 - **request**
     - header: 뿌린 사용자 "X-USER-ID", 뿌린 방 "X-ROOM-ID", **토큰값 "X-TOKEN-VALUE"**
 - **response**
@@ -152,7 +152,7 @@
     - 뿌리기 건에 대한 받기 API 요청 시 해당 key 값이 redis에 없으면 만료 응답을 보낸다. 
     - redis client lib은 lettuce 사용 
 
-### 3. 조회 API
+### :heavy_check_mark: 3. 조회 API
 - **request**
     - header: 뿌린 사용자 "X-USER-ID", 뿌린 방 "X-ROOM-ID", **토큰값 "X-TOKEN-VALUE"**
 - **response**
