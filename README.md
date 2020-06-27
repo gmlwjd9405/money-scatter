@@ -44,6 +44,7 @@
 - > H2 Database 1.4.200
 - > JPA 2.3.1
 - > Redis 2.3.1
+- > Apache Commons-Text 1.6
 - > Lombok 1.18.12
    
 #### Package Structure
@@ -117,7 +118,7 @@
     - [x] 뿌리기 요청 건을 생성한다.
         - [x] 고유한 token 발급 
             - 3자리 문자열 (예측 불가능)
-            - token 생성 로직: 
+            - token 생성 로직: 1~9, a~z, A~Z 문자열 랜덤 생성 
         - [x] 요청한 사용자 식별값과 속한 대화방 정보 저장
             - 요청한 사용자의 식별값은 숫자 형태이며 "X-USER-ID" 라는 HTTP Header로 전달됩니다.
             - 요청한 사용자가 속한 대화방의 식별값은 문자 형태이며 "X-ROOM-ID" 라는 HTTP Header로 전달됩니다.
