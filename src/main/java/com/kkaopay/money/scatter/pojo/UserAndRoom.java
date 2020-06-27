@@ -1,6 +1,6 @@
 package com.kkaopay.money.scatter.pojo;
 
-import com.kkaopay.money.scatter.error.exception.NoRequiredHeaderException;
+import com.kkaopay.money.scatter.error.exception.InvalidValueException;
 import lombok.Getter;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -28,7 +28,7 @@ public class UserAndRoom implements Serializable {
 
     private void validate(final Long ownerId, final String roomId) {
         if (ObjectUtils.isEmpty(ownerId) || StringUtils.isEmpty(roomId)) {
-            throw new NoRequiredHeaderException();
+            throw new InvalidValueException();
         }
     }
 

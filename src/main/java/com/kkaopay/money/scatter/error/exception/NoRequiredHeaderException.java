@@ -1,10 +1,14 @@
 package com.kkaopay.money.scatter.error.exception;
 
-import com.kkaopay.money.scatter.error.ErrorMessage;
+import com.kkaopay.money.scatter.error.ErrorCode;
 
-public class NoRequiredHeaderException extends RuntimeException {
+public class NoRequiredHeaderException extends MoneyScatterException {
 
     public NoRequiredHeaderException() {
-        super(ErrorMessage.NO_REQUIRED_HEADER_INFO);
+        super(ErrorCode.NO_REQUIRED_HEADER_INFO);
+    }
+
+    public NoRequiredHeaderException(final String message) {
+        super(message, ErrorCode.NO_REQUIRED_HEADER_INFO);
     }
 }

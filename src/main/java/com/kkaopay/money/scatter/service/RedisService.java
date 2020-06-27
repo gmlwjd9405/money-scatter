@@ -1,6 +1,7 @@
 package com.kkaopay.money.scatter.service;
 
-import com.kkaopay.money.scatter.error.ErrorMessage;
+import com.kkaopay.money.scatter.error.ErrorCode;
+import com.kkaopay.money.scatter.error.exception.NotExistValueException;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -22,7 +23,7 @@ public class RedisService {
 
     public void validateExpiredKey(final String key) {
         if (ObjectUtils.isEmpty(valueOperations.get(key))) {
-            throw new RuntimeException(ErrorMessage.EXPIRED_SCATTER_MONEY);
+            throw new NotExistValueException(ErrorCode.EXPIRED_SCATTER_MONEY);
         }
     }
 }

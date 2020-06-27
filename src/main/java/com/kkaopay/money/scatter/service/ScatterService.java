@@ -4,7 +4,7 @@ import com.kkaopay.money.scatter.domain.PickedUpMoney;
 import com.kkaopay.money.scatter.domain.ScatterMoney;
 import com.kkaopay.money.scatter.dto.request.ScatterMoneyRequestDto;
 import com.kkaopay.money.scatter.dto.response.ScatterMoneyDto;
-import com.kkaopay.money.scatter.error.ErrorMessage;
+import com.kkaopay.money.scatter.error.ErrorCode;
 import com.kkaopay.money.scatter.error.exception.NotExistValueException;
 import com.kkaopay.money.scatter.error.exception.UnAuthorizationException;
 import com.kkaopay.money.scatter.pojo.PickedUpMoneys;
@@ -12,15 +12,12 @@ import com.kkaopay.money.scatter.pojo.UserAndRoom;
 import com.kkaopay.money.scatter.repository.ScatterRepository;
 import com.kkaopay.money.scatter.support.TokenGenerator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -31,9 +28,6 @@ public class ScatterService {
     private final ScatterRepository scatterRepository;
     private final PickedUpMoneyService pickedUpMoneyService;
     private final RedisService redisService;
-
-    @Resource(name = "redisTemplate")
-    private ValueOperations<String, Object> valueOperations;
 
     @Transactional
     public String scatter(final Long ownerId, final String roomId, final ScatterMoneyRequestDto dto) {
@@ -77,17 +71,17 @@ public class ScatterService {
      */
     private void validateIsNotOwnerAndSameRoom(final UserAndRoom userAndRoom, final ScatterMoney scatterMoney) {
         if (userAndRoom.isSameOwnerId(scatterMoney.getOwnerId())) {
-            throw new RuntimeException(ErrorMessage.CANNOT_RECEIVE_BECAUSE_OWNER);
+            throw new UnAuthorizationException(ErrorCode.CANNOT_RECEIVE_BECAUSE_OWNER);
         }
         if (userAndRoom.isNotSameRoomId(scatterMoney.getRoomId())) {
-            throw new RuntimeException(ErrorMessage.REQUIRED_SAME_ROOM);
+            throw new UnAuthorizationException(ErrorCode.REQUIRED_SAME_ROOM);
         }
     }
 
     /** * 할당된 분배건의 수와 지정한 인원의 수가 같으면 모두 할당된 것으로, 더이상 할당할 수 없다. */
     private void validateExistPickedUpMoney(final int personnel, final int pickedUpMoneyCount) {
         if (personnel == pickedUpMoneyCount) {
-            throw new RuntimeException(ErrorMessage.CANNOT_RECEIVE_BECAUSE_ALL_ALLOCATED);
+            throw new NotExistValueException(ErrorCode.CANNOT_RECEIVE_BECAUSE_ALL_ALLOCATED);
         }
     }
 
@@ -97,7 +91,7 @@ public class ScatterService {
                 .anyMatch(pickedUpMoney -> pickedUpMoney.isSameUser(ownerId));
 
         if (isExistUser) {
-            throw new RuntimeException(ErrorMessage.USER_IS_ALREADY_ALLOCATED);
+            throw new UnAuthorizationException(ErrorCode.USER_IS_ALREADY_ALLOCATED);
         }
     }
 
@@ -129,7 +123,7 @@ public class ScatterService {
     /** * 뿌린 건에 대한 조회는 7일 동안 할 수 있습니다. */
     private void validatePeriod(final LocalDateTime createdDate) {
         if (LocalDateTime.now().minusDays(EXPIRED_DAYS).isAfter(createdDate)) {
-            throw new RuntimeException(ErrorMessage.EXPIRED_INQUIRY_PERIOD);
+            throw new NotExistValueException(ErrorCode.EXPIRED_INQUIRY_PERIOD);
         }
     }
 }

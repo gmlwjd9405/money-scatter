@@ -5,6 +5,7 @@ public class ErrorMessage {
     // common
     public static final String NO_REQUIRED_HEADER_INFO = "필수 헤더 정보가 없습니다.";
     public static final String IS_NULL_VALUE = "입력 값이 null 값 입니다.";
+    public static final String INVALID_INPUT_VALUE = "유효하지 않은 입력값입니다.";
 
     // 받기 API
     public static final String CANNOT_RECEIVE_BECAUSE_OWNER = "뿌린 사람은 받을 수 없습니다.";
