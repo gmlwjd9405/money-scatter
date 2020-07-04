@@ -47,10 +47,11 @@ public class ScatterService {
     }
 
     public BigDecimal receive(final Long ownerId, final String roomId, final String token) {
+        redisService.validateExpiredKey(token);
+
         UserAndRoom userAndRoom = UserAndRoom.of(ownerId, roomId);
         ScatterMoney scatterMoney = this.findByToken(token);
 
-        redisService.validateExpiredKey(token);
         validateService.validateIsNotOwnerAndSameRoom(userAndRoom, scatterMoney);
 
         PickedUpMoneys pickedUpMoneyInfo = pickedUpMoneyService.findAllByScatterMoneyId(scatterMoney.getId());
