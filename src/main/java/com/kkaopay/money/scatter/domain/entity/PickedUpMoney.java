@@ -19,8 +19,8 @@ public class PickedUpMoney {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
     @JoinColumn(name = "scatterMoney_id")
+    @JsonBackReference
     private ScatterMoney scatterMoney;
 
     @Column(nullable = false)

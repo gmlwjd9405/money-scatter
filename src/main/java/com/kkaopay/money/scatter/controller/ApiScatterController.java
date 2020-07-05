@@ -29,7 +29,8 @@ public class ApiScatterController {
                                           @RequestBody final ScatterMoneyRequestDto dto) {
         final String token = scatterService.scatter(userId, roomId, dto);
 
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok()
+                .body(token);
     }
 
     @PatchMapping("/money/scatter")
@@ -38,7 +39,8 @@ public class ApiScatterController {
                                      @RequestHeader(TOKEN_HEADER_NAME) final String token) {
         final BigDecimal money = scatterService.receive(userId, roomId, token);
 
-        return ResponseEntity.ok().body(money);
+        return ResponseEntity.ok()
+                .body(money);
     }
 
     @GetMapping("/money/scatter")
@@ -47,6 +49,7 @@ public class ApiScatterController {
                                   @RequestHeader(TOKEN_HEADER_NAME) final String token) {
         final ScatterMoneyDto responseDto = scatterService.show(userId, roomId, token);
 
-        return ResponseEntity.ok().body(responseDto);
+        return ResponseEntity.ok()
+                .body(responseDto);
     }
 }
