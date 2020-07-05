@@ -8,7 +8,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Slf4j
 @Component
@@ -18,7 +17,7 @@ public class HttpInterceptor implements HandlerInterceptor {
     public static final String ROOM_IDENTIFIER_HEADER_NAME = "x-room-id";
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         boolean isEmptyUserId = isEmptyHeader(request.getHeader(USER_IDENTIFIER_HEADER_NAME));
         boolean isEmptyRoomId = isEmptyHeader(request.getHeader(ROOM_IDENTIFIER_HEADER_NAME));
 

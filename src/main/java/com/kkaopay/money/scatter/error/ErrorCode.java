@@ -25,8 +25,8 @@ public enum ErrorCode {
     ENTITY_NOT_FOUND(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_EXIST_VALUE),
     EXPIRED_INQUIRY_PERIOD(HttpStatus.BAD_REQUEST, ErrorMessage.EXPIRED_INQUIRY_PERIOD);
 
-    private HttpStatus status;
-    private String message;
+    private final HttpStatus status;
+    private final String message;
 
     ErrorCode(final HttpStatus status, final String message) {
         this.status = status;
