@@ -26,7 +26,7 @@ public class ApiScatterController {
     @PostMapping("/money/scatter")
     public ResponseEntity<String> scatter(@RequestHeader(USER_IDENTIFIER_HEADER_NAME) final Long userId,
                                           @RequestHeader(ROOM_IDENTIFIER_HEADER_NAME) final String roomId,
-                                          @RequestBody ScatterMoneyRequestDto dto) {
+                                          @RequestBody final ScatterMoneyRequestDto dto) {
         final String token = scatterService.scatter(userId, roomId, dto);
 
         return ResponseEntity.ok().body(token);
@@ -35,7 +35,7 @@ public class ApiScatterController {
     @PatchMapping("/money/scatter")
     public ResponseEntity<BigDecimal> receive(@RequestHeader(USER_IDENTIFIER_HEADER_NAME) final Long userId,
                                      @RequestHeader(ROOM_IDENTIFIER_HEADER_NAME) final String roomId,
-                                     @RequestHeader(TOKEN_HEADER_NAME) String token) {
+                                     @RequestHeader(TOKEN_HEADER_NAME) final String token) {
         final BigDecimal money = scatterService.receive(userId, roomId, token);
 
         return ResponseEntity.ok().body(money);
@@ -44,7 +44,7 @@ public class ApiScatterController {
     @GetMapping("/money/scatter")
     public ResponseEntity<ScatterMoneyDto> show(@RequestHeader(USER_IDENTIFIER_HEADER_NAME) final Long userId,
                                   @RequestHeader(ROOM_IDENTIFIER_HEADER_NAME) final String roomId,
-                                  @RequestHeader(TOKEN_HEADER_NAME) String token) {
+                                  @RequestHeader(TOKEN_HEADER_NAME) final String token) {
         final ScatterMoneyDto responseDto = scatterService.show(userId, roomId, token);
 
         return ResponseEntity.ok().body(responseDto);
