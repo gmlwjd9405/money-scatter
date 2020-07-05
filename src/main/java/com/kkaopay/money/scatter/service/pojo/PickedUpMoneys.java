@@ -1,8 +1,8 @@
 package com.kkaopay.money.scatter.service.pojo;
 
+import com.kkaopay.money.scatter.controller.dto.response.MoneyAndUserDto;
 import com.kkaopay.money.scatter.domain.entity.PickedUpMoney;
 import com.kkaopay.money.scatter.domain.entity.ScatterMoney;
-import com.kkaopay.money.scatter.controller.dto.response.MoneyAndUserDto;
 import com.kkaopay.money.scatter.error.ErrorMessage;
 import lombok.Getter;
 
@@ -54,13 +54,8 @@ public class PickedUpMoneys {
     }
 
     private BigDecimal distributeMoney(final ScatterMoney scatterMoney) {
-        BigDecimal originMoney = scatterMoney.getMoney();
-        BigDecimal completedMoney = this.calculateCompletedMoney();
-        BigDecimal sparedMoney = originMoney.subtract(completedMoney);
-
-        int originPersonnel = scatterMoney.getPersonnel();
-        int completedPersonnel = this.pickedUpMoneys.size();
-        int sparePersonnel = originPersonnel - completedPersonnel;
+        BigDecimal sparedMoney = scatterMoney.spareMoney(this.calculateCompletedMoney());
+        int sparePersonnel = scatterMoney.sparePersonnel(this.pickedUpMoneys.size());
 
         if (sparePersonnel == 1) { // 남은 인원이 1명이면
             return sparedMoney; // 남은 돈 모두 할당

@@ -47,4 +47,12 @@ public class ScatterMoney {
     @OneToMany(mappedBy = "scatterMoney", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<PickedUpMoney> pickedUpMoneys = new ArrayList<>();
+
+    public BigDecimal spareMoney(final BigDecimal completedMoney) {
+        return this.getMoney().subtract(completedMoney);
+    }
+
+    public int sparePersonnel(final int completedPersonnel) {
+        return this.getPersonnel() - completedPersonnel;
+    }
 }
